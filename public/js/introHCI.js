@@ -17,6 +17,12 @@ function initializePage() {
 /*
  * Make an AJAX call to retrieve project details and add it in
  */
+function callBackFn(result) {
+	var projectHTML = '<img src="' + result["image"] + '" class="detailsImage" >' + "<h4>" + result["title"] + 
+	"</h4> <h5>" + result["date"] + "</h5> <p>" + result["summary"] + "</p>";
+ 	$("#project" + result["id"] + " .details").html(projectHTML);
+}
+
 function addProjectDetails(e) {
 	// Prevent following the link
 	e.preventDefault();
@@ -26,5 +32,11 @@ function addProjectDetails(e) {
 	// get rid of 'project' from the front of the id 'project3'
 	var idNumber = projectID.substr('project'.length);
 
-	console.log("User clicked on project " + idNumber);
+	// console.log("User clicked on project " + idNumber);
+
+	$.get("/project/"+ idNumber, callBackFn);
 }
+
+$(".project").click(function(e){
+	e.preventDefault();
+});
